@@ -3,7 +3,7 @@ import pika
 def callback(ch, method, properties, body):
     print(f"Message '{body.decode()}' has not been processed")
 
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
 channel = connection.channel()
 
 channel.queue_declare(queue='DLQ', durable=True)

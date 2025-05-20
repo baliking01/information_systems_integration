@@ -1,0 +1,42 @@
+services:
+  rabbitmq:
+    image: 'rabbitmq:3-management'
+    ports:
+        - 5672:5672
+        - 15672:15672
+
+  consumer:
+    build: 
+      context: .
+      dockerfile: Dockerfile-consumer
+    volumes:
+        - .:/app      
+    depends_on:
+      - rabbitmq
+
+  producer:
+    build: 
+      context: .
+      dockerfile: Dockerfile-producer
+    volumes:
+        - .:/app      
+    depends_on:
+      - rabbitmq
+
+  stats_consumer:
+    build: 
+      context: .
+      dockerfile: Dockerfile-stats_consumer
+    volumes:
+        - .:/app      
+    depends_on:
+      - rabbitmq
+
+  dlq_consumer:
+      build: 
+        context: .
+        dockerfile: Dockerfile-dlq_consumer
+      volumes:
+          - .:/app      
+      depends_on:
+        - rabbitmq

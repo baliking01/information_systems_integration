@@ -3,7 +3,7 @@ import pika
 def callback(ch, method, properties, body):
     print(f"10 '{body.decode()}' messages have been processed")
 
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
 channel = connection.channel()
 
 channel.queue_declare(queue='colorStatistics', durable=True)
