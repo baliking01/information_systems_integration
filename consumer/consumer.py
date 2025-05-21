@@ -8,6 +8,7 @@ def callback(ch, method, properties, body, color):
         ch.basic_publish(exchange='',
                          routing_key='DLQ',
                          body=color)
+
     # process message, send to stats after 10
     else:
         print(f"processed: {color}")

@@ -2,41 +2,35 @@ services:
   rabbitmq:
     image: 'rabbitmq:3-management'
     ports:
-        - 5672:5672
-        - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  soap_server:
+    build: ./server
+    ports:
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
+
+  soap_client:
+    build: ./client
+    depends_on:
+      - soap_server
 
   consumer:
-    build: 
-      context: .
-      dockerfile: Dockerfile-consumer
-    volumes:
-        - .:/app      
+    build: ./consumer
     depends_on:
       - rabbitmq
 
-  producer:
-    build: 
-      context: .
-      dockerfile: Dockerfile-producer
-    volumes:
-        - .:/app      
+  stats:
+    build: ./stats
     depends_on:
       - rabbitmq
 
-  stats_consumer:
-    build: 
-      context: .
-      dockerfile: Dockerfile-stats_consumer
-    volumes:
-        - .:/app      
+  dlq:
+    build: ./dlq
     depends_on:
       - rabbitmq
-
-  dlq_consumer:
-      build: 
-        context: .
-        dockerfile: Dockerfile-dlq_consumer
-      volumes:
-          - .:/app      
-      depends_on:
-        - rabbitmq
