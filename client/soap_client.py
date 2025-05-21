@@ -2,7 +2,7 @@ from zeep import Client
 import time
 import random
 
-wsdl_url = 'http://localhost:8000/?wsdl'
+wsdl_url = 'http://soap_server:8000/?wsdl'
 client = Client(wsdl_url)
 
 colors = ['RED', 'GREEN', 'BLUE']

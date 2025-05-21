@@ -23,12 +23,12 @@ application = Application(
 if __name__ == '__main__':
     print("SOAP server listening on http://localhost:8000")
 
-    """
+    
     connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
     channel = connection.channel()
 
     channel.exchange_declare(exchange='colorExchange', exchange_type='direct', durable=True)
-    """
+    
     wsgi_app = WsgiApplication(application)
     server = make_server('0.0.0.0', 8000, wsgi_app)
     server.serve_forever()
